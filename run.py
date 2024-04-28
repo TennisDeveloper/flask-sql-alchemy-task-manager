@@ -1,7 +1,7 @@
 
 #We need to import os once again, in order to utilize environment variables within this file.
 # We also need to import the 'app' variable that we've created within our taskmanager
-# package, defined in the init file.import os
+# package, defined in the init file.
 import os
 from taskmanager import app
 

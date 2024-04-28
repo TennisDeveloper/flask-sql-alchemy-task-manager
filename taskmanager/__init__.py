@@ -10,12 +10,7 @@ from flask_sqlalchemy import SQLAlchemy
 if os.path.exists("env.py"):
     import env  # noqa
 
-# Now we can create an instance of the imported Flask() class, and that will be stored in
-# a variable called 'app', which takes the default Flask name module.
-# Then, we need to specify two app configuration variables, and these will both come from our environment variables.
-# app.config SECRET_KEY and app.config SQLALCHEMY_DATABASE_URI, both wrapped in square brackets and quotes.
-# Each of these will be set to get their respective environment variable, which is SECRET_KEY,
-# and the short and sweet DB_URL for the database location which we'll set up later.
+# Now we can create an instance of the imported Flask() class, and that will be stored in a variable called app, which takes the default Flask name module. Then, we need to specify two app configuration variables, and these will both come from our environment variables. app.config SECRET_KEY and app.config SQLALCHEMY_DATABASE_URI, both wrapped in square brackets and quotes. Each of these will be set to get their respective environment variable, which is SECRET_KEY, and the short and sweet DB_URL for the database location which we'll set up later.
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
