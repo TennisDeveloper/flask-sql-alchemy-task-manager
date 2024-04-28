@@ -34,8 +34,7 @@ class Task(db.Model):
     task_description = db.Column(db.Text, nullable = False) #this allows longer strings to be used similar as text area
     is_urgent= db.Column(db.Boolean, default=False, nullable=False)
     due_date= db.Column(db.Date, nullable = False)
-    # category_id = db.Column(db.Integer, db.ForeignKey("category.id"), ondelete= "CASCADE", nullable = False ) #use lower case to refer to Cateogory class, once a category is deleted, it will perform a cascading effect and also delete any task linked to it.
-    category_id = db.Column(db.Integer, db.ForeignKey("category.id", ondelete="CASCADE"), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey("category.id", ondelete="CASCADE"), nullable=False) #use lower case to refer to Cateogory class, once a category is deleted, it will perform a cascading effect and also delete any task linked to it.
 
 
     def __repr__(self):
