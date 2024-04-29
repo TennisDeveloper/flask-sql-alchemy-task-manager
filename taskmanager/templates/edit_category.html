@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="light-blue-text text-darken-4 center-align">Edit Category</div>
+
+<div class="row card-panel grey lighten-5"> <!--we added here the card-panel from materialize and colors-->
+    <form class="col s12" method="POST" action="{{ url_for('edit_category', category_id=category.id) }}"> <!--The form itself will use the "POST" method once submitted, and for the action, that's going to point back to the same function of 'edit_category'.-->
+      <!--Category Name-->
+        <div class="row">
+        <div class="input-field col s12">
+            <i class="fas fa-folder-open prefix light-blue-text text-darken-4"></i>
+          <input  id="category_name" name="category_name" value = "{{ category.category_name }}" minlength="3", maxlength="25" type="text" class="validate" required> <!--best practice is to have the id, name and label all matching. I need to provide the value of the edited category name-->
+          <label for="category_name">Category Name</label>
+        </div>
+      </div>
+
+      <!--Submit Button-->
+      <div class="row">
+        <div class="col s12 center-align">
+           <button type="submit" class="btn-large light-blue darken-1">
+            Edit Category <i class="fas fa-edit right"></i>
+           </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

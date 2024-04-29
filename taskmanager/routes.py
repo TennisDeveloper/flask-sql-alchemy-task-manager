@@ -13,7 +13,8 @@ def home(): #this is the python function not the html site
 
 @app.route("/categories") #html site
 def categories(): #this is the python function not the html site
-    return render_template("categories.html")
+    categories = list(Category.query.order_by(Category.category_name).all()) # I am querying here all the categories and ordering the categories by name. .all() method is a cursor object, which is similar to an array or list of records. There is a simple method which converts the cursor object data into list.
+    return render_template("categories.html", categories=categories) #categories as name of the html template = variable categories has to be passed to rendered object to display that to user
 
 #The app route will be "/add_category", and this time we need to include a list of the
 # two methods "GET" and "POST", since we will be submitting a form to the database.
@@ -33,4 +34,14 @@ def add_category():
         db.session.commit()
         return redirect(url_for("categories")) #After the form gets submitted, and we're adding and committing the new data to our database, we could redirect the user back to the 'categories' page.
     return render_template("add_category.html") #this is like else block of the if statement. by default the normal method is GET
+
+@app.route("/edit_category/<int:category_id>", methods=["GET", "POST"]) #I need to add the integer of the category.id column which has variable defined as category_id on the categories.html file
+def edit_category(category_id): #variable needs to be passed to the function as well
+    category= Category.query.get_or_404(category_id) #What this does is query the database and attempts to find the specified record using the data provided, and if no match is found, it will trigger a 404 error page.
+    if request.method == "POST":
+        category.category_name= request.form.get("category_name")
+        db.session.commit()
+        return redirect(url_for("categories"))
+    
+    return render_template("edit_category.html", category= category) #Now, we can pass that variable into the rendered template, which is expecting it to be called 'category', and that will be set to the defined 'category' variable above.
 
