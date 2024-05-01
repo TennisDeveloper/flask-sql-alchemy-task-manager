@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="light-blue-text text-darken-4 center-align">Categories</div>
+<h3 class="light-blue-text text-darken-4 center-align">Categories</h3>
 
 <!--we do need a button that will bring us to the form to add a new category.-->
 <div class="row">
@@ -22,8 +22,8 @@
           
         </div>
         <div class="card-action">
-          <a href="{{ url_for('edit_category', category_id=category.id )}}" class="btn green accent-4">Edit</a> <!--we need to have some possibility to edit and delete the category, this is formatted as button. We set the url_for link to edit_category.html and we need to specify the category.id, which is edited.-->
-          <a href="#"class="btn red">Delete</a>
+          <a href="{{ url_for('edit_category', category_id=category.id )}}" class="btn green accent-4">Edit</a> <!--we need to have some possibility to edit and delete the category, this is formatted as button. We set the url_for link to edit_category function in routes.py and we need to specify the category.id, which is edited. This is passed as category_id as a variable-->
+          <a href="{{ url_for('delete_category', category_id=category.id )}}"class="btn red">Delete</a>         <!--we need to have some possibility to edit and delete the category, this is formatted as button. We set the url_for link to delete_category function in routes.py and we need to specify the category.id, which is edited.-->
         </div>
       </div>
     </div>

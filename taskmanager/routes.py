@@ -45,3 +45,33 @@ def edit_category(category_id): #variable needs to be passed to the function as 
     
     return render_template("edit_category.html", category= category) #Now, we can pass that variable into the rendered template, which is expecting it to be called 'category', and that will be set to the defined 'category' variable above.
 
+@app.route("/delete_category/<int:category_id>")
+def delete_category(category_id):
+    category= Category.query.get_or_404(category_id)
+    db.session.delete(category) #here I need to delete the variable
+    db.session.commit()
+    return redirect(url_for("categories"))
+
+#route decorator for adding the task.
+#If you recall from the video where we designed our database schema, each task actually requires
+# the user to select a category for that task.
+# In order to do that, we first need to extract a list of all of the categories available from the database.
+
+@app.route("/add_task", methods=["GET", "POST"])
+def add_task():
+    categories = list(Category.query.order_by(Category.category_name).all())
+    if request.method == "POST":
+        task = Task(
+            task_name= request.form.get("task_name"),
+            task_description= request.form.get("task_description"),
+            is_urgent= bool(True if request.form.get("is_urgent") else False),
+            due_date= request.form.get("due_date"),
+            category_id= request.form.get("category_id")
+        )
+        #this is a new instance of the imported Category model
+        db.session.add(task)  #Once we've grabbed the form data, we can then 'add' and 'commit' this information to the SQLAlchemy database variable of 'db' imported at the top of the file.
+        db.session.commit()
+        return redirect(url_for("home")) #After the form gets submitted, and we're adding and committing the new data to our database, we could redirect the user back to the 'home' page.
+    return render_template("add_task.html", categories= categories) #this is like else block of the if statement, meaning GET statement: if user wants to get a new task he needs to be redirected to the add_task.html, which contains the form for adding the task
+    #first categories is a variable name, second categories is the list of categories under the ad_task(): function, this retrieves the whole list
+    
