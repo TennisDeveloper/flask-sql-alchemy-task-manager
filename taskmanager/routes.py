@@ -8,7 +8,8 @@ from taskmanager.models import Category, Task
 #of "base.html" that we will create shortly.
 @app.route("/")
 def home(): #this is the python function not the html site
-    return render_template("tasks.html") #this is now the home page, before it was base.html page as we didnt have before the other html file
+    tasks = list(Task.query.order_by(Task.id).all())
+    return render_template("tasks.html", tasks= tasks) #this is now the home page, before it was base.html page as we didnt have before the other html file
 
 
 @app.route("/categories") #html site
@@ -74,4 +75,4 @@ def add_task():
         return redirect(url_for("home")) #After the form gets submitted, and we're adding and committing the new data to our database, we could redirect the user back to the 'home' page.
     return render_template("add_task.html", categories= categories) #this is like else block of the if statement, meaning GET statement: if user wants to get a new task he needs to be redirected to the add_task.html, which contains the form for adding the task
     #first categories is a variable name, second categories is the list of categories under the ad_task(): function, this retrieves the whole list
-    
+
