@@ -90,4 +90,9 @@ def edit_task(task_id):
         return redirect(url_for("home")) #After the form gets submitted, and we're adding and committing the new data to our database, we could redirect the user back to the 'home' page.
     return render_template("edit_task.html", task=task , categories= categories) #this is like else block of the if statement, meaning GET statement: if user wants to get a task he needs to be redirected to the edit_task.html, which contains the form for editing the task
     
-
+@app.route("/delete_task/<int:task_id>")
+def delete_task(task_id):
+    task= Task.query.get_or_404(task_id)
+    db.session.delete(task) #here I need to delete the variable
+    db.session.commit()
+    return redirect(url_for("home"))
