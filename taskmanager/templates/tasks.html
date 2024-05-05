@@ -24,6 +24,9 @@
       <div class="collapsible-body">
         <strong>{{ task.task_category }}</strong>
         <p>{{ task.task_description }}</p>
+        <p>
+          <a href="{{ url_for('edit_task', task_id=task.id )}}" class="btn green accent-4">Edit</a> <!--we need to have some possibility to edit and delete the category, this is formatted as button. We set the url_for link to edit_task function in routes.py and we need to specify the task.id, which is edited. This is passed as task_id as a variable-->
+        </p>
       </div>
     </li>
     {% endfor %}

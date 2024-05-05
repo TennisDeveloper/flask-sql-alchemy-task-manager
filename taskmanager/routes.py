@@ -76,3 +76,18 @@ def add_task():
     return render_template("add_task.html", categories= categories) #this is like else block of the if statement, meaning GET statement: if user wants to get a new task he needs to be redirected to the add_task.html, which contains the form for adding the task
     #first categories is a variable name, second categories is the list of categories under the ad_task(): function, this retrieves the whole list
 
+@app.route("/edit_task/<int:task_id>", methods=["GET", "POST"])
+def edit_task(task_id):
+    task= Task.query.get_or_404(task_id)
+    categories = list(Category.query.order_by(Category.category_name).all())
+    if request.method == "POST":
+        task.task_name= request.form.get("task_name")
+        task.task_description= request.form.get("task_description")
+        task.is_urgent= bool(True if request.form.get("is_urgent") else False)
+        task.due_date= request.form.get("due_date")
+        task.category_id= request.form.get("category_id")
+        db.session.commit()
+        return redirect(url_for("home")) #After the form gets submitted, and we're adding and committing the new data to our database, we could redirect the user back to the 'home' page.
+    return render_template("edit_task.html", task=task , categories= categories) #this is like else block of the if statement, meaning GET statement: if user wants to get a task he needs to be redirected to the edit_task.html, which contains the form for editing the task
+    
+
